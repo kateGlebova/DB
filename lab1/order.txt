@@ -1,0 +1,32 @@
+(lp0
+(dp1
+S'date'
+p2
+S'23/09/16'
+p3
+sS'client'
+p4
+S'Molly Weasely'
+p5
+sS'product_id'
+p6
+I0
+sa(dp7
+g2
+S'12/03/84'
+p8
+sg4
+S'Big Brother'
+p9
+sg6
+I3
+sa(dp10
+g2
+S'02/03/04'
+p11
+sg4
+S'Me'
+p12
+sg6
+I7
+sa.

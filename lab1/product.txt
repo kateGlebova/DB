@@ -1,0 +1,72 @@
+(lp0
+(dp1
+S'price'
+p2
+F545.88
+sS'product_id'
+p3
+I0
+sS'product_name'
+p4
+S'Harry Potter and the Cursed Child'
+p5
+sa(dp6
+g2
+F104.26
+sg3
+I1
+sg4
+S'Jumanji by Chris Van Allsburg'
+p7
+sa(dp8
+g2
+F104.26
+sg3
+I2
+sg4
+S'The Hobbit by J.R.R. Tolkien'
+p9
+sa(dp10
+g2
+F45.32
+sg3
+I3
+sg4
+S'1984 by George Orwell'
+p11
+sa(dp12
+S'price'
+p13
+F33.88
+sS'product_id'
+p14
+I4
+sS'product_name'
+p15
+S'Old Man and the Sea'
+p16
+sa(dp17
+g13
+F300.3
+sg14
+I5
+sg15
+S'Code Complete by Steve McConnell'
+p18
+sa(dp19
+g13
+F205.4
+sg14
+I6
+sg15
+S'The Great Gatsby by F. Scott Fitzgerald'
+p20
+sa(dp21
+g13
+F508.9
+sg14
+I7
+sg15
+S'The Help by Kathryn Stocket'
+p22
+sa.
