@@ -1,3 +1,6 @@
+lab1/.idea/
+
 lab2/.idea/
-lab2/env/
-lab2/check_in/__pycache__
+lab2/lab2/__pycache__/
+lab2/log/
+lab2/app/__pycache__/

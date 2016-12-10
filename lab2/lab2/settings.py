@@ -15,18 +15,16 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qkv)-s3=nr#&8#=6*)h2hw+2^#hr@!(ps!k0*vxj-a-6x3njre'
+SECRET_KEY = '_^!g^on3rnob)-yq99lu5)1&6n3%!a+bt!v7h634fpj+psqn^='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -70,17 +68,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lab2.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'check_in',
+        'USER': 'lab2',
+        'PASSWORD': 'pass',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -100,7 +99,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -114,8 +112,54 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    "version": 1,
+    "formatters": {
+        "brief": {
+            "format": "%(levelname)-8s: %(name)-15s: %(message)s"
+        },
+        "full": {
+            "format": "%(asctime)s %(name)-15s %(levelname)-8s %(message)s"
+        }
+    },
+    "handlers": {
+        "filelog": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "INFO",
+            "filename": BASE_DIR + '/log/root.log'
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "brief",
+            "level": "WARN",
+            "stream": "ext://sys.stderr"
+        },
+        "DBlog": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "WARN",
+            "filename": BASE_DIR + '/log/DB.log'
+        }
+    },
+    "loggers": {
+        "DBlogger": {
+            "level": "WARN",
+            "handlers": [
+                "DBlog"
+            ]
+        },
+        "root": {
+            "level": "DEBUG",
+            "handlers": [
+                "filelog",
+                "console"
+            ]
+        }
+    }
+}
