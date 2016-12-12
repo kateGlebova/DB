@@ -4,6 +4,7 @@ import MySQLdb as mdb
 
 from app.connection import close_connection
 from lab2.settings import DATABASES
+import xml.etree.ElementTree as ET
 
 db_logger = getLogger("DBlogger")
 
@@ -53,15 +54,37 @@ class Session:
         sql += "PRIMARY KEY ({}))".format(entity.primary_key)
         self._execute_query(sql)
 
+    def general_select(self, entities, columns=['*'], condition=""):
+        """
+
+        :type columns: list of str
+        :type entities: list of BaseModel subclasses
+        """
+        table_names = ''
+        for entity in entities:
+            table_names += "{},".format(entity.table_name)
+        column_names = ''
+        for column in columns:
+            column_names += "{},".format(column)
+        sql = "SELECT {} FROM {} {}".format(column_names[:-1], table_names[:-1], condition)
+        self._execute_query(sql)
+
+    def get_by_condition(self, entity, condition=""):
+        self.general_select([entity], condition=condition)
+
     def get_list(self, entity):
         """
 
         :rtype: tuple of dictionaries
         :type entity: BaseModel subclass
         """
-        sql = "SELECT * FROM {}".format(entity.table_name)
-        self._execute_query(sql)
+        self.general_select([entity.table_name])
+        self.get_by_condition(entity)
         return self.cur.fetchall()
+
+    def get_one(self, entity, id):
+        self.get_by_condition(entity, "WHERE {} = {}".format(entity.primary_key, id))
+        return self.cur.fetchone()
 
     def create(self, entity, dict_values):
         """
@@ -78,10 +101,6 @@ class Session:
 
         sql = "INSERT INTO {} ({}) VALUES ({})".format(entity.table_name, columns[:-1], values[:-1])
         self._execute_query(sql)
-
-    def get(self, entity, id):
-        sql = "SELECT * FROM {} WHERE {} = {}".format(entity.table_name, entity.primary_key, id)
-        self._execute_query(sql)
         return self.cur.fetchone()
 
     def update(self, entity, id, dict_values):
@@ -93,5 +112,19 @@ class Session:
         self._execute_query(sql)
 
     def delete(self, entity, id):
+        for ref, fk in entity.ref.items():
+            self.get_by_condition(ref, "WHERE {} = {}".format(fk, id))
+            referenced = self.cur.fetchall()
+            for row in referenced:
+                self.delete(ref, row[ref.primary_key])
         sql = "DELETE FROM {} WHERE {} = {}".format(entity.table_name, entity.primary_key, id)
         self._execute_query(sql)
+
+    def fill_from_xml(self, entity, xml_file):
+        old = self.get_list(entity)
+        for entry in old:
+            self.delete(entity, entry[entity.primary_key])
+        tree = ET.parse(xml_file)
+        root = tree.getroot()
+        for child in root:
+            self.create(entity, {column.tag: column.text for column in child})

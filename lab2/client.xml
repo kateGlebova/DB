@@ -1,0 +1,22 @@
+<data>
+  <client>
+    <first_name>Dima</first_name>
+    <last_name>Bilan</last_name>
+    <phone_number>+389405783908</phone_number>
+  </client>
+  <client>
+    <first_name>Alla</first_name>
+    <last_name>Pugacheva</last_name>
+    <phone_number>+478294678207</phone_number>
+  </client>
+  <client>
+    <first_name>Verka</first_name>
+    <last_name>Serduchka</last_name>
+    <phone_number>+386582964789</phone_number>
+  </client>
+  <client>
+    <first_name>Igor</first_name>
+    <last_name>Krutoy</last_name>
+    <phone_number>+397837829078</phone_number>
+  </client>
+</data>

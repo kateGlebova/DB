@@ -1,10 +1,9 @@
 from app import connection
-from app.dimension_models import Client, Hotel, Room
-from app.fact_model import CheckIn
+from app.models import Client, Hotel, Room, CheckIn
 from app.session import Session
 
 db_session = Session(connection.get_connection())
-client = Client(db_session)
-hotel = Hotel(db_session)
-room = Room(db_session)
-check_in = CheckIn(db_session)
+db_session.create_table(Client)
+db_session.create_table(Hotel)
+db_session.create_table(Room)
+db_session.create_table(CheckIn)
