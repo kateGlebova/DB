@@ -78,7 +78,7 @@ class Session:
         :rtype: tuple of dictionaries
         :type entity: BaseModel subclass
         """
-        self.general_select([entity.table_name])
+        self.general_select([entity])
         self.get_by_condition(entity)
         return self.cur.fetchall()
 
@@ -97,10 +97,15 @@ class Session:
             if column not in entity.null or column in entity.null and column in dict_values:
                 if column != entity.primary_key:
                     columns += "{},".format(column)
-                    values += "'{}',".format(dict_values[column])
+                    if entity.columns[column] == 'BOOLEAN':
+                        values += "{},".format(dict_values[column])
+                    else:
+                        values += "'{}',".format(dict_values[column])
 
         sql = "INSERT INTO {} ({}) VALUES ({})".format(entity.table_name, columns[:-1], values[:-1])
         self._execute_query(sql)
+        arbitrary_key = list(dict_values.keys())[0]
+        self.get_by_condition(entity, condition="WHERE {}={}".format(arbitrary_key, dict_values[arbitrary_key]))
         return self.cur.fetchone()
 
     def update(self, entity, id, dict_values):
@@ -118,6 +123,10 @@ class Session:
             for row in referenced:
                 self.delete(ref, row[ref.primary_key])
         sql = "DELETE FROM {} WHERE {} = {}".format(entity.table_name, entity.primary_key, id)
+        self._execute_query(sql)
+
+    def make_fulltext(self, entity, column):
+        sql = "ALTER TABLE {} ADD FULLTEXT({})".format(entity.table_name, column)
         self._execute_query(sql)
 
     def fill_from_xml(self, entity, xml_file):

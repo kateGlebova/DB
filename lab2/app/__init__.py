@@ -7,3 +7,5 @@ db_session.create_table(Client)
 db_session.create_table(Hotel)
 db_session.create_table(Room)
 db_session.create_table(CheckIn)
+# db_session.make_fulltext(Hotel, 'description')
+

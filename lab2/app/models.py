@@ -13,27 +13,29 @@ class CheckIn(BaseModel):
     }
 
     @classmethod
-    def search(cls, session, is_lux=None, room_price=None, number_of_people=None, hotel_description=None):
-        """
-
-        :param is_lux: bool
-        :param room_price: 2-element tuple with min and max room price
-        :param number_of_people: 2-element tuple with min and max number of people in the room
-        :param hotel_description:  dict with '+' and '-' as keys and words to include and exclude as values
-        """
+    def search(
+            cls,
+            session,
+            is_lux=None,
+            min_price=None,
+            max_price=None,
+            min_people=None,
+            max_people=None,
+            include=None,
+            exclude=None
+    ):
         conditions = []
         if is_lux is not None:
             conditions.append('{}.is_lux IS {}'.format(Room.table_name, is_lux))
-        if room_price:
-            conditions.append('{}.price BETWEEN {} AND {}'.format(Room.table_name, room_price[0], room_price[1]))
-        if number_of_people:
-            conditions.append('{}.number_of_people BETWEEN {} AND {}'.format(Room.table_name, number_of_people[0], number_of_people[1]))
-        if hotel_description:
+        if min_price and max_price:
+            conditions.append('{}.price BETWEEN {} AND {}'.format(Room.table_name, min_price, max_price))
+        if min_people and max_people:
+            conditions.append('{}.number_of_people BETWEEN {} AND {}'.format(Room.table_name, min_people,
+                                                                             max_people))
+        if include or exclude:
             boolean = "MATCH ({}.description) AGAINST ('".format(Hotel.table_name)
-            include = hotel_description.get('+', None)
             if include:
                 boolean += "+{} ".format(include)
-            exclude = hotel_description.get('+', None)
             if exclude:
                 boolean += "-{}".format(exclude)
             boolean += "' IN BOOLEAN MODE)"
@@ -68,6 +70,10 @@ class Room(BaseModel):
         'idhotel': 'INT'
     }
     ref = {CheckIn: 'idroom'}
+
+    @property
+    def is_lux(self):
+        return bool(self.__getattr__('is_lux'))
 
 
 class Hotel(BaseModel):
