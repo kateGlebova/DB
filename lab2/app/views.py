@@ -59,14 +59,15 @@ def new(request):
 
 
 def detail(request, id):
+    check_in = CheckIn(db_session, id)
     if request.method == 'POST':
         form = CheckInUpdate(request.POST)
         if form.is_valid():
-            modify_check_in(CheckIn(db_session, id), form.cleaned_data)
+            modify_check_in(check_in, form.cleaned_data)
             return redirect('index')
     else:
 
-        form = CheckInUpdate()
+        form = CheckInUpdate(check_in=check_in)
     return render(request, 'update_check_in.html', {'form': form, 'id': id})
 
 
@@ -77,6 +78,7 @@ def delete(request, id):
 
 def modify_check_in(check_in, data):
     for field, value in data.items():
-        exec('check_in.%s = value' % field)
+        if value:
+            exec('check_in.%s = value' % field)
     check_in.total_price = check_in.days * Room(db_session, check_in.idroom).price
     check_in.save()

@@ -1,26 +1,47 @@
 from django.forms import forms, NullBooleanField, IntegerField, CharField, FloatField, DateField, ChoiceField
+from flask import request
 
 from app import Client
 from app import Room
 from app import db_session
 
 
+def get_room_choice_list():
+    return list((room.id, room.id) for room in Room.get_all(db_session))
+
+
+def get_client_choice_list():
+    return list((client.id, client.id) for client in Client.get_all(db_session))
+
+
 class CheckInInsert(forms.Form):
     date = DateField(label="Date")
     days = IntegerField(label="Number of days")
-    idclient = ChoiceField(label="Client ID",
-                           choices=tuple((client.id, client.id) for client in Client.get_all(db_session)))
-    idroom = ChoiceField(label="Room ID",
-                         choices=tuple((room.id, room.id) for room in Room.get_all(db_session)))
+    idclient = ChoiceField(label="Client ID", required=False,
+                           choices=get_client_choice_list())
+    idroom = ChoiceField(label="Room ID", required=False,
+                         choices=get_room_choice_list())
 
 
 class CheckInUpdate(forms.Form):
     date = DateField(label="Date", required=False)
     days = IntegerField(label="Number of days", required=False)
-    idclient = ChoiceField(label="Client ID", required=False,
-                           choices=tuple((client.id, client.id) for client in Client.get_all(db_session)))
-    idroom = ChoiceField(label="Room ID", required=False,
-                         choices=tuple((room.id, room.id) for room in Room.get_all(db_session)))
+    idclient = ChoiceField(
+        label="Client ID", required=False,
+        choices=get_client_choice_list()
+    )
+    idroom = ChoiceField(
+        label="Room ID", required=False,
+        choices=get_room_choice_list()
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.check_in = kwargs.pop('check_in')
+        super(CheckInUpdate, self).__init__(*args, **kwargs)
+        self.fields['date'].initial = self.check_in.date
+        self.fields['days'].initial = self.check_in.days
+        self.fields['idclient'].initial = self.check_in.idclient
+        self.fields['idroom'].initial = self.check_in.idroom
 
 
 class SearchForm(forms.Form):
