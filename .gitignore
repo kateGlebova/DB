@@ -1,4 +1,6 @@
-lab1/.idea/workspace.xml
-lab2/check_ins/.idea
-lab2/.idea
-lab2/lab2/__pycache__
+lab1/.idea/
+
+lab2/.idea/
+lab2/lab2/__pycache__/
+lab2/log/
+lab2/app/__pycache__/
