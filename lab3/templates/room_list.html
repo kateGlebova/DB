@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <form action="{% url 'index' %}" method="get">
+            <button type="submit" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+        </form>
+        <h1 class="text-center">ROOMS</h1>
+        <div style="margin:20px 0">
+{#            <form action="{% url 'room_xml_fill' %}">#}
+{#                <button type="submit" class="btn btn-default" aria-label="Left Align">#}
+{#                    Fill from XML#}
+{#                </button>#}
+{#            </form>#}
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Number of people</th>
+                <th>Price</th>
+                <th>Lux</th>
+                <th><a href="{% url 'hotel_list' %}">Hotel ID</a></th>
+            </tr>
+            {% for row in room %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.number_of_people }}</td>
+                    <td>{{ row.price }}</td>
+                    <td>{{ row.is_lux }}</td>
+                    <td>{{ row.hotel_id }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
