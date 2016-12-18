@@ -17,20 +17,20 @@ def get_client_choice_list():
 class CheckInInsert(forms.Form):
     date = DateField(label="Date")
     days = IntegerField(label="Number of days")
-    idclient = ChoiceField(label="Client ID", required=False,
+    client_id = ChoiceField(label="Client ID", required=False,
                            choices=get_client_choice_list())
-    idroom = ChoiceField(label="Room ID", required=False,
+    room_id = ChoiceField(label="Room ID", required=False,
                          choices=get_room_choice_list())
 
 
 class CheckInUpdate(forms.Form):
     date = DateField(label="Date", required=False)
     days = IntegerField(label="Number of days", required=False)
-    idclient = ChoiceField(
+    client_id = ChoiceField(
         label="Client ID", required=False,
         choices=get_client_choice_list()
     )
-    idroom = ChoiceField(
+    room_id = ChoiceField(
         label="Room ID", required=False,
         choices=get_room_choice_list()
     )
@@ -40,8 +40,8 @@ class CheckInUpdate(forms.Form):
         super(CheckInUpdate, self).__init__(*args, **kwargs)
         self.fields['date'].initial = self.check_in.date
         self.fields['days'].initial = self.check_in.days
-        self.fields['idclient'].initial = self.check_in.idclient
-        self.fields['idroom'].initial = self.check_in.idroom
+        self.fields['client_id'].initial = self.check_in.client_id
+        self.fields['room_id'].initial = self.check_in.room_id
 
 
 class SearchForm(forms.Form):

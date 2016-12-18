@@ -8,8 +8,8 @@ class CheckIn(BaseModel):
         'date': 'DATE',
         'days': 'INT',
         'total_price': 'DOUBLE',
-        'idclient': 'INT',
-        'idroom': 'INT'
+        'client_id': 'INT',
+        'room_id': 'INT'
     }
 
     @classmethod
@@ -57,7 +57,7 @@ class Client(BaseModel):
         'last_name': 'VARCHAR(45)',
         'phone_number': 'VARCHAR(13)'
     }
-    ref = {CheckIn: 'idclient'}
+    ref = {CheckIn: 'client_id'}
 
 
 class Room(BaseModel):
@@ -67,9 +67,9 @@ class Room(BaseModel):
         'number_of_people': 'INT',
         'price': 'DOUBLE',
         'is_lux': 'BOOLEAN',
-        'idhotel': 'INT'
+        'hotel_id': 'INT'
     }
-    ref = {CheckIn: 'idroom'}
+    ref = {CheckIn: 'room_id'}
 
     @property
     def is_lux(self):
@@ -87,4 +87,4 @@ class Hotel(BaseModel):
         'description': 'MEDIUMTEXT',
     }
     null = ['description']
-    ref = {Room: 'idhotel'}
+    ref = {Room: 'hotel_id'}
