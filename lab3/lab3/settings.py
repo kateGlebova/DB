@@ -123,3 +123,50 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    "version": 1,
+    "formatters": {
+        "brief": {
+            "format": "%(levelname)-8s: %(name)-15s: %(message)s"
+        },
+        "full": {
+            "format": "%(asctime)s %(name)-15s %(levelname)-8s %(message)s"
+        }
+    },
+    "handlers": {
+        "filelog": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "INFO",
+            "filename": BASE_DIR + '/log/root.log'
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "brief",
+            "level": "WARN",
+            "stream": "ext://sys.stderr"
+        },
+        "DBlog": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "WARN",
+            "filename": BASE_DIR + '/log/DB.log'
+        }
+    },
+    "loggers": {
+        "DBlogger": {
+            "level": "WARN",
+            "handlers": [
+                "DBlog"
+            ]
+        },
+        "root": {
+            "level": "DEBUG",
+            "handlers": [
+                "filelog",
+                "console"
+            ]
+        }
+    }
+}

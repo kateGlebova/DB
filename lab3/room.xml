@@ -1,0 +1,26 @@
+<data>
+    <room>
+        <number_of_people>1</number_of_people>
+        <price>200</price>
+        <is_lux>True</is_lux>
+        <hotel_id>2</hotel_id>
+    </room>
+    <room>
+        <number_of_people>2</number_of_people>
+        <price>200</price>
+        <is_lux>False</is_lux>
+        <hotel_id>1</hotel_id>
+    </room>
+    <room>
+        <number_of_people>2</number_of_people>
+        <price>400</price>
+        <is_lux>True</is_lux>
+        <hotel_id>1</hotel_id>
+    </room>
+    <room>
+        <number_of_people>1</number_of_people>
+        <price>100</price>
+        <is_lux>False</is_lux>
+        <hotel_id>3</hotel_id>
+    </room>
+</data>

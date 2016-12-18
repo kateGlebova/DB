@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+import xml.etree.ElementTree as ET
 from check_in.forms import SearchForm, CheckInInsert, CheckInUpdate
 from check_in.models import CheckIn, Room, Client, Hotel
 
@@ -75,3 +75,28 @@ def room_list(request):
 
 def hotel_list(request):
     return render(request, 'hotel_list.html', {'hotel': Hotel.objects.all()})
+
+
+def fill_from_xml(model, xml_file):
+    for row in model.objects.all():
+        row.delete()
+    tree = ET.parse(xml_file)
+    root = tree.getroot()
+    for child in root:
+        new = model(**{column.tag: column.text for column in child})
+        new.save()
+
+
+def client_xml_fill(request):
+    fill_from_xml(Client, 'client.xml')
+    return redirect('client_list')
+
+
+def room_xml_fill(request):
+    fill_from_xml(Room, 'room.xml')
+    return redirect('room_list')
+
+
+def hotel_xml_fill(request):
+    fill_from_xml(Hotel, 'hotel.xml')
+    return redirect('hotel_list')

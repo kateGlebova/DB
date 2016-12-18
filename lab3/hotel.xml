@@ -1,0 +1,23 @@
+<data>
+    <hotel>
+        <country>Ukraine</country>
+        <city>Lviv</city>
+        <street>Yefremova</street>
+        <building>3</building>
+        <description>An intimate and charming atmosphere, high quality comfort and traditional Ukrainian hospitality.</description>
+    </hotel>
+    <hotel>
+        <country>Austria</country>
+        <city>Vienna</city>
+        <street>Neubergasse</street>
+        <building>233</building>
+        <description>A commercial establishment providing lodging, meals, and other guest services.</description>
+    </hotel>
+    <hotel>
+        <country>Netherlands</country>
+        <city>Amsterdam</city>
+        <street>Herengracht</street>
+        <building>300</building>
+        <description>Ten elegant canal-side houses. in the centre of Amsterdam. </description>
+    </hotel>
+</data>
