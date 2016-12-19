@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^hotels/$', views.hotel_list, name='hotel_list'),
     url(r'^clients/xml/$', views.client_xml_fill, name='client_xml_fill'),
     url(r'^rooms/xml/$', views.room_xml_fill, name='room_xml_fill'),
-    url(r'^hotels/xml/$', views.hotel_xml_fill, name='hotel_xml_fill')
+    url(r'^hotels/xml/$', views.hotel_xml_fill, name='hotel_xml_fill'),
+    url(r'^delete_log/$', views.delete_log, name='delete_log')
 ]

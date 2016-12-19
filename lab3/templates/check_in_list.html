@@ -2,7 +2,17 @@
 {% block content %}
     <div class="container-fluid">
         <h1 class="text-center">CHECK IN</h1>
-        <div style="margin:20px" class="text-center">
+        <div style="margin:20px 0">
+            <form action="{% url 'delete_log' %}" method="post">
+                {% csrf_token %}
+                <label>Clean insertion log in </label>
+                <input type="number" name="minutes"> minutes
+                <button type="submit" class="btn btn-default">
+                    Clean
+                </button>
+            </form>
+        </div>
+        <div style="margin:20px 0" class="text-center">
             <form action="{% url 'new' %}">
                 <span class="glyphicon glyphicon-plus"></span>
                 <button type="submit" class="btn btn-default" aria-label="Left Align">

@@ -1,7 +1,7 @@
 from logging import getLogger
 
 import MySQLdb as mdb
-from lab2.settings import DATABASES as DB
+from lab3.settings import DATABASES as DB
 
 db_logger = getLogger("DBlogger")
 

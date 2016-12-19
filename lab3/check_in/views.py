@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 import xml.etree.ElementTree as ET
+
+from check_in import db_session
 from check_in.forms import SearchForm, CheckInInsert, CheckInUpdate
 from check_in.models import CheckIn, Room, Client, Hotel
 
@@ -32,6 +34,7 @@ def index(request):
 
 def new(request):
     if request.method == 'POST':
+        # db_session.log_on_insertion()
         form = CheckInInsert(request.POST)
         if form.is_valid():
             check_in = CheckIn(**form.cleaned_data)
@@ -100,3 +103,9 @@ def room_xml_fill(request):
 def hotel_xml_fill(request):
     fill_from_xml(Hotel, 'hotel.xml')
     return redirect('hotel_list')
+
+
+def delete_log(request):
+    if request.method == 'POST' and "minutes" in request.POST:
+        db_session.scheduled_deletion(request.POST['minutes'])
+    return redirect('index')
