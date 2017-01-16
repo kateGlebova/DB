@@ -9,3 +9,4 @@ lab3/.idea/
 lab3/lab3/__pycache__/
 lab3/log/
 lab3/check_in/__pycache__/
+lab3/check_in/migrations/

@@ -61,7 +61,7 @@ def new(request):
 def detail(request, id):
     check_in = CheckIn(db_session, id)
     if request.method == 'POST':
-        form = CheckInUpdate(request.POST)
+        form = CheckInUpdate(request.POST, check_in=check_in)
         if form.is_valid():
             modify_check_in(check_in, form.cleaned_data)
             return redirect('index')
